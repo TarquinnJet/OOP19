@@ -2,7 +2,6 @@ package lesson6.HT_queue;
 
 public class ArrayQueue extends AbstractQueue {
 	public static final int DEFAULT_CAPACITY = 10;
-	// public static final int MIN_INT_VALUE = ;
 	private int[] data;
 	private int headQueue, endQueue;
 
@@ -17,7 +16,7 @@ public class ArrayQueue extends AbstractQueue {
 	@Override
 	public void push(int el) {
 		data[endQueue] = el;
-		if (endQueue == data.length-1)
+		if (endQueue == data.length - 1)
 			endQueue = 0;
 		else
 			endQueue++;
@@ -41,21 +40,22 @@ public class ArrayQueue extends AbstractQueue {
 
 	@Override
 	public int size() {
-		if(headQueue < endQueue)
-		return endQueue - headQueue;
-		else return DEFAULT_CAPACITY - headQueue + endQueue;
+		if (headQueue < endQueue)
+			return endQueue - headQueue;
+		else
+			return DEFAULT_CAPACITY - headQueue + endQueue;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("[");
 		for (int i = 0; i < data.length; i++) {
-			if (headQueue > endQueue){
-				if((i < endQueue)||(i  >= headQueue))
+			if (headQueue > endQueue) {
+				if ((i < endQueue) || (i >= headQueue))
 					sb.append(data[i]).append(", ");
 				else
 					sb.append("\" _ \"").append(", ");
-			} else	if ((headQueue <= i) && (i < endQueue))
+			} else if ((headQueue <= i) && (i < endQueue))
 				sb.append(data[i]).append(", ");
 			else
 				sb.append("\" _ \"").append(", ");
