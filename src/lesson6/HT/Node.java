@@ -3,8 +3,8 @@ package lesson6.HT;
 import lesson6.stack.Stack;
 
 public class Node {
-	Node next;
-	int el;
+	public Node next;
+	public int el;
 
 	public Node() {
 	}
