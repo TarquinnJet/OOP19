@@ -10,7 +10,6 @@ class A extends Task1 implements F {
 
 	@Override
 	public void f() {
-		// TODO Auto-generated method stub
 		
 	}
 

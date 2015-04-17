@@ -16,14 +16,14 @@ public class ArrayQueue extends AbstractQueue {
 
 	@Override
 	public void push(int el) {
-		// data[tailQueue] = el;
-		// if (tailQueue == data.length - 1)
-		// tailQueue = 0;
-		// else
-		// tailQueue++;
-		if (++tailQueue == data.length)
-			tailQueue = 0;
-		data[tailQueue] = el;
+		 data[tailQueue] = el;
+		 if (tailQueue == data.length - 1)
+		 tailQueue = 0;
+		 else
+		 tailQueue++;
+//		if (++tailQueue == data.length)
+//			tailQueue = 0;
+//		data[tailQueue] = el;
 		isUsedAtListOnce = true;
 	}
 

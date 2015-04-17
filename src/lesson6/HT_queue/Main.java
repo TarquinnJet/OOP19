@@ -23,7 +23,7 @@ public class Main {
 		 q1.push(33);
 		 q1.pop();
 		 q1.push(7);
-		 // q1.push(333);
+		 q1.push(333);q1.pop();q1.pop();
 		 System.out.println(q1.toString());
 		 System.out.println(q1.size());
 //		q2.push(1);
