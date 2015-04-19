@@ -2,14 +2,14 @@ package lesson6.HT;
 
 import lesson6.stack.AbstrackStack;
 
-public class LinkedStack extends AbstrackStack {
+public class LinkedStack<T> extends AbstrackStack <T>{
 
-	private Node first;
+	private Node<T> first;
 	private int size;
 
 	@Override
-	public void push(int el) {
-		Node nd = new Node();
+	public void push(T el) {
+		Node<T> nd = new Node<>();
 		nd.el = el;
 		nd.next = first;
 		first = nd;
@@ -18,9 +18,9 @@ public class LinkedStack extends AbstrackStack {
 	}
 
 	@Override
-	public Integer pop() {
+	public T pop() {
 		if (first != null) {
-			int el = first.el;
+			T el = first.el;
 			first = first.next;
 			size--;
 			return el;
@@ -29,9 +29,9 @@ public class LinkedStack extends AbstrackStack {
 	}
 
 	@Override
-	public Integer take() {
+	public T take() {
 		if (first != null) {
-			int el = first.el;
+			T el = first.el;
 			return el;
 		}
 		return null;
@@ -43,9 +43,11 @@ public class LinkedStack extends AbstrackStack {
 	}
 
 	public String toString() {
-		Node tmp = first;
+		Node<T> tmp = first;
 		if (tmp == null)
 			return "[]";
+		// StringBuilder sb = new StringBuilder(size * 4 + 10);
+		// for (Node tmp = first;tmp != null;tmp = tmp.next){like while }
 		StringBuilder sb = new StringBuilder("[");
 		while (tmp != null) {
 			if (tmp.next != null)

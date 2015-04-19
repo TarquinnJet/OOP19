@@ -1,30 +1,31 @@
 package lesson6.stack;
 
-public class ArrayStack extends AbstrackStack {
+public class ArrayStack<E> extends AbstrackStack<E> {
 
 	public static final int DEFAULT_CAPACITY = 10;
 
-	private int[] data;
+	private E[] data;
 	private int size;
 
 	public ArrayStack() {
 		this(DEFAULT_CAPACITY);
 	}
 
+	@SuppressWarnings("unchecked")
 	public ArrayStack(int capacity) {
-		data = new int[capacity];
+		data = (E[]) new Object[capacity];
 	}
 
 	@Override
-	public void push(int el) {
+	public void push(E el) {
 		if (size < data.length)
 			data[size] = el;
 		size++;
 	}
 
 	@Override
-	public Integer pop() {
-		Integer el;
+	public E pop() {
+		E el;
 		if (isEmpty())
 			el = null;
 		el = data[--size];
@@ -32,7 +33,7 @@ public class ArrayStack extends AbstrackStack {
 	}
 
 	@Override
-	public Integer take() {
+	public E take() {
 
 		return this.isEmpty() ? null : data[size - 1];
 	}
@@ -49,26 +50,27 @@ public class ArrayStack extends AbstrackStack {
 			return "[]";
 		StringBuilder sb = new StringBuilder("[");
 		for (int i = 0; i < size; i++) {
-			if (i != size - 1) 
+			if (i != size - 1)
 				sb.append(data[i]).append(", ");
-			else sb.append(data[i]).append("]");
+			else
+				sb.append(data[i]).append("]");
 		}
 		return sb.toString();
 	}
 
 	public static void main(String[] args) {
-		Stack s1 = new ArrayStack();
-		Stack s2 = new ArrayStack();
-
-		s1.push(3);
-		s2.push(44);
-		System.out.println(s1);
-		System.out.println(s2);
-		s1.pushAll(s2);
-		System.out.println(s1);
-		System.out.println(s2);
-		s1.popAll(s2);
-		System.out.println(s1);
-		System.out.println(s2);
+//		Stack s1 = new ArrayStack();
+//		Stack s2 = new ArrayStack();
+//
+//		s1.push(3);
+//		s2.push(44);
+//		System.out.println(s1);
+//		System.out.println(s2);
+//		s1.pushAll(s2);
+//		System.out.println(s1);
+//		System.out.println(s2);
+//		s1.popAll(s2);
+//		System.out.println(s1);
+//		System.out.println(s2);
 	}
 }

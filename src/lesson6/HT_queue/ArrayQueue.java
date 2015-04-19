@@ -1,8 +1,8 @@
 package lesson6.HT_queue;
 
-public class ArrayQueue extends AbstractQueue {
+public class ArrayQueue<T> extends AbstractQueue<T> {
 	public static final int DEFAULT_CAPACITY = 10;
-	private int[] data;
+	private T[] data;
 	private int headQueue, tailQueue;
 	private boolean isUsedAtListOnce;
 
@@ -10,12 +10,13 @@ public class ArrayQueue extends AbstractQueue {
 		this(DEFAULT_CAPACITY);
 	}
 
+	@SuppressWarnings("unchecked")
 	public ArrayQueue(int capacity) {
-		data = new int[capacity];
+		data = (T[]) new Object[capacity];
 	}
 
 	@Override
-	public void push(int el) {
+	public void push(T el) {
 		 data[tailQueue] = el;
 		 if (tailQueue == data.length - 1)
 		 tailQueue = 0;
@@ -28,8 +29,8 @@ public class ArrayQueue extends AbstractQueue {
 	}
 
 	@Override
-	public int pop() {
-		int el;
+	public T pop() {
+		T el;
 		el = data[headQueue];
 		if ((headQueue == data.length - 1) && (tailQueue > 0))
 			headQueue = 0;
@@ -39,7 +40,7 @@ public class ArrayQueue extends AbstractQueue {
 	}
 
 	@Override
-	public int take() {
+	public T take() {
 		return data[headQueue];
 	}
 

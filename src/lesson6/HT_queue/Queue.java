@@ -1,18 +1,18 @@
 package lesson6.HT_queue;
 
-public interface Queue {
+public interface Queue<T> {
 
-	void push(int el);
+	void push(T el);
 
-	int pop();
+	T pop();
 
-	int take();
+	T take();
 
 	int size();
 
 	boolean isEmpty();
 
-	void pushAll(Queue q);
+	void pushAll(Queue<T> q);
 
-	void popAll(Queue q);
+	void popAll(Queue<T> q);
 }

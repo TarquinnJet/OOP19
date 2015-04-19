@@ -1,6 +1,6 @@
 package lesson6.HT_queue;
 
-public abstract class AbstractQueue implements Queue {
+public abstract class AbstractQueue<T> implements Queue<T> {
 
 	@Override
 	public boolean isEmpty() {
@@ -8,13 +8,13 @@ public abstract class AbstractQueue implements Queue {
 	}
 
 	@Override
-	public void pushAll(Queue q) {
+	public void pushAll(Queue<T> q) {
 		while (!q.isEmpty())
 			push(q.pop());
 	}
 
 	@Override
-	public void popAll(Queue q) {
+	public void popAll(Queue<T> q) {
 		while (!isEmpty())
 			q.push(pop());
 	}

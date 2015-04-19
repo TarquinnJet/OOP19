@@ -2,13 +2,13 @@ package lesson6.HT_queue;
 
 import lesson6.HT.Node;
 
-public class LinkedQueue extends AbstractQueue {
-	private Node head, tail;
+public class LinkedQueue<E> extends AbstractQueue<E> {
+	private Node<E> head, tail;
 	private int size;
 
 	@Override
-	public void push(int el) {
-		Node nod = new Node();
+	public void push(E el) {
+		Node<E> nod = new Node<>();
 		nod.el = el;
 		if (tail == null) {
 			head = nod;
@@ -22,16 +22,17 @@ public class LinkedQueue extends AbstractQueue {
 	}
 
 	@Override
-	public int pop() {
-		int el = head.el;
+	public E pop() {
+		E el = head.el;
 		head = head.next;
 		size--;
 		return el;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public int take() {
-		return head != null ? head.el : 0;
+	public E take() {
+		return (E) (head != null ? head.el : 0);
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class LinkedQueue extends AbstractQueue {
 	}
 
 	public String toString() {
-		Node tmp = head;
+		Node<E> tmp = head;
 		if (tmp == null)
 			return "[]";
 		StringBuilder sb = new StringBuilder("[");

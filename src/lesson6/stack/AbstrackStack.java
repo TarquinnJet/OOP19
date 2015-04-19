@@ -1,6 +1,6 @@
 package lesson6.stack;
 
-public abstract class AbstrackStack implements Stack {
+public abstract class AbstrackStack<E> implements Stack<E> {
 
 	@Override
 	public boolean isEmpty() {
@@ -8,13 +8,13 @@ public abstract class AbstrackStack implements Stack {
 	}
 
 	@Override
-	public void popAll(Stack s) {
+	public void popAll(Stack<E> s) {
 		while (!isEmpty()) {
 			s.push(pop());
 		}
 	}
 	@Override
-	public void pushAll(Stack s) {
+	public void pushAll(Stack<E> s) {
 		while (!s.isEmpty()) {
 			push(s.pop());
 		}

@@ -1,14 +1,14 @@
 package lesson6.stack;
 
-public interface Stack {
+public interface Stack <E>{
 	
-	void push(int el);
-	Integer pop();
-	Integer take();
+	void push(E el);
+	E pop();
+	E take();
 	int size();
 	boolean isEmpty();
 	
-	void pushAll(Stack s);
-	void popAll(Stack s);
+	void pushAll(Stack<E> s);
+	void popAll(Stack<E> s);
 
 }
