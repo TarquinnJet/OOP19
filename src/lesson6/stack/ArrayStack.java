@@ -58,19 +58,4 @@ public class ArrayStack<E> extends AbstrackStack<E> {
 		return sb.toString();
 	}
 
-	public static void main(String[] args) {
-//		Stack s1 = new ArrayStack();
-//		Stack s2 = new ArrayStack();
-//
-//		s1.push(3);
-//		s2.push(44);
-//		System.out.println(s1);
-//		System.out.println(s2);
-//		s1.pushAll(s2);
-//		System.out.println(s1);
-//		System.out.println(s2);
-//		s1.popAll(s2);
-//		System.out.println(s1);
-//		System.out.println(s2);
-	}
 }

@@ -17,26 +17,34 @@ public class ArrayQueue<T> extends AbstractQueue<T> {
 
 	@Override
 	public void push(T el) {
-		 data[tailQueue] = el;
-		 if (tailQueue == data.length - 1)
-		 tailQueue = 0;
-		 else
-		 tailQueue++;
-//		if (++tailQueue == data.length)
-//			tailQueue = 0;
-//		data[tailQueue] = el;
+		data[tailQueue] = el;
+		if (tailQueue == data.length - 1)
+			tailQueue = 0;
+		else
+			tailQueue++;
+		// if (++tailQueue == data.length)
+		// tailQueue = 0;
+		// data[tailQueue] = el;
 		isUsedAtListOnce = true;
 	}
 
 	@Override
 	public T pop() {
-		T el;
-		el = data[headQueue];
-		if ((headQueue == data.length - 1) && (tailQueue > 0))
-			headQueue = 0;
-		else
-			headQueue++;
-		return el;
+		if (size() != 1) {
+			T el;
+			el = data[headQueue];
+			if ((headQueue == data.length - 1) && (tailQueue > 0))
+				headQueue = 0;
+			else
+				headQueue++;
+			return el;
+		} else {
+			T el;
+			el = data[headQueue];
+			headQueue = tailQueue = 0;
+			isUsedAtListOnce = false;
+			return el;
+		}
 	}
 
 	@Override
@@ -48,16 +56,18 @@ public class ArrayQueue<T> extends AbstractQueue<T> {
 	public int size() {
 		if (headQueue < tailQueue)
 			return tailQueue - headQueue;
-		else if ((headQueue == tailQueue)&&(!isUsedAtListOnce)) return 0;
-			return DEFAULT_CAPACITY - headQueue + tailQueue;
-		
+		else if ((headQueue == tailQueue) && (!isUsedAtListOnce))
+			return 0;
+		return DEFAULT_CAPACITY - headQueue + tailQueue;
+
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("[");
 		for (int i = 0; i < data.length; i++) {
-			if (size() == DEFAULT_CAPACITY) sb.append(data[i]).append(", ");
+			if (size() == DEFAULT_CAPACITY)
+				sb.append(data[i]).append(", ");
 			else if (headQueue > tailQueue) {
 				if ((i < tailQueue) || (i >= headQueue))
 					sb.append(data[i]).append(", ");
