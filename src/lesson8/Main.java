@@ -4,7 +4,8 @@ import java.util.Scanner;
 class Main { 
     public static void main(String[] args) { 
     	//RuntimeException ex = new RuntimeException("wrong string lenght. must be at least 10 symbols");
- Scanner sc = new Scanner(System.in);        
+ @SuppressWarnings("resource")
+Scanner sc = new Scanner(System.in);        
          
            String a = sc.nextLine();     
            if (a.length() <= 10) throw new IllegalArgumentException("jksdfkjbsdfksrger"); 
@@ -14,5 +15,5 @@ class Main {
 //void check (int idx){
 //	if ():
 //		
-//		throw ошибки по индексам
+//		throw пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //}
