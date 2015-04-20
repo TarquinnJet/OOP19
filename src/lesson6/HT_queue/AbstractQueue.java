@@ -8,13 +8,13 @@ public abstract class AbstractQueue<T> implements Queue<T> {
 	}
 
 	@Override
-	public void pushAll(Queue<T> q) {
+	public void pushAll(Queue<? extends T> q) {
 		while (!q.isEmpty())
 			push(q.pop());
 	}
 
 	@Override
-	public void popAll(Queue<T> q) {
+	public void popAll(Queue<? super T> q) {
 		while (!isEmpty())
 			q.push(pop());
 	}

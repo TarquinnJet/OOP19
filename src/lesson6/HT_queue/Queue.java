@@ -12,7 +12,9 @@ public interface Queue<T> {
 
 	boolean isEmpty();
 
-	void pushAll(Queue<T> q);
+	void pushAll(Queue<? extends T> q);
 
-	void popAll(Queue<T> q);
+	void popAll(Queue<? super T> q);
+
+	String toString();
 }

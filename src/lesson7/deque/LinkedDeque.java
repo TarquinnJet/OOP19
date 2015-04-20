@@ -1,3 +1,4 @@
+//надо учесть, что если попнули последний элемент, надо обнулить ссылки начала и конца. TOstring с одной и с другой сторон
 package lesson7.deque;
 
 import lesson7.deque.Node;
@@ -26,6 +27,7 @@ public class LinkedDeque<T> extends AbstractDeque<T> implements Deque<T> {
 	@Override
 	public T pop() {
 		T el = head.el;
+		head.right = null;
 		head = head.left;
 		size--;
 		return el;
@@ -54,9 +56,22 @@ public class LinkedDeque<T> extends AbstractDeque<T> implements Deque<T> {
 		return sb.delete(sb.length() - 2, sb.length()).append("]").toString();
 	}
 
+	public String toStringFormLast() {
+		Node<T> tmp = tail;
+		if (tmp == null)
+			return "[]";
+		StringBuilder sb = new StringBuilder("[");
+		while (tmp != null) {
+			sb.append(tmp.el).append(", ");
+			tmp = tmp.right;
+		}
+		return sb.delete(sb.length() - 2, sb.length()).append("]").toString();
+	}
+
 	@Override
 	public T popLast() {
 		T el = tail.el;
+		tail.left = null;
 		tail = tail.right;
 		size--;
 		return el;
@@ -78,31 +93,23 @@ public class LinkedDeque<T> extends AbstractDeque<T> implements Deque<T> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public T takeLast() {
+		return (T) (tail != null ? tail.el : 0);
+	}
+
 	public static void main(String[] args) {
-		Deque<Integer> dq1 = new LinkedDeque<>();
+		Deque<Number> dq1 = new LinkedDeque<>();
 		for (int i = 1; i <= 5; i++)
 			dq1.push(i);
 		System.out.println(dq1.toString());
-		
-		Deque<Integer> dq2 = new LinkedDeque<>();
-		for (int i = 6; i <= 10; i++)
+		Deque<Double> dq2 = new LinkedDeque<>();
+		for (double i = 10; i <= 15; i++)
 			dq2.push(i);
 		System.out.println(dq2.toString());
-		
-		Deque<String> dq3 = new LinkedDeque<>();
-		dq3.push("a");dq3.push("b");dq3.push("c");dq3.push("d");dq3.push("e");
-		System.out.println(dq3.toString());
-
-		Deque<String> dq4 = new LinkedDeque<>();
-		dq4.push("f");dq4.push("g");dq4.push("h");dq4.push("i");dq4.push("j");
-		System.out.println(dq4.toString());
-		
-		dq1.pushAllFirst(dq2);System.out.println(dq1.toString());
-		dq3.pushAllFirst(dq4);System.out.println(dq3.toString());
-		dq1.popLast();System.out.println(dq1.toString());
-		
-		//dq1.popAllLast(dq2);System.out.println(dq1.toString());
-		//dq3.popAllLast(dq4);System.out.println(dq3.toString());
-		
+//dq1.pushAll(dq2);		System.out.println(dq1.toString());
+dq2.popAll(dq1);		System.out.println(dq1.toString());
 	}
+
 }
