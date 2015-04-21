@@ -16,8 +16,15 @@ public class ArrayList<E> extends AbstractList<E> {
 		data = (E[]) new Object[capacity];
 	}
 
-	private boolean check() {
-		return false;
+	private boolean isIdxCorrect(int idx) {
+		if (0 < idx && idx <= size()) {
+			return true;
+		} else {
+			throw new IllegalArgumentException("wrong idx!");
+		}
+	}
+
+	private void resizeData() {
 	}
 
 	@Override
@@ -35,56 +42,91 @@ public class ArrayList<E> extends AbstractList<E> {
 
 	@Override
 	public void add(int idx, E element) {
-		if (size == data.length) {
-			E[] datatmp = (E[]) new Object[data.length * 3 / 2 + 1];
-			for (int i = 0; i < idx; i++)
-				datatmp[i] = data[i];
-			datatmp[idx] = element;
-			for (int i = idx + 1; i < data.length; i++)
-				datatmp[i] = data[i];
-			data = datatmp;
-		} else {
-			for (int i = data.length - 1; i >= idx; i--)
-				data[i] = data[i-1];
-			data[idx] = element;
+		if (isIdxCorrect(idx) == true) {
+			if (size == data.length) {
+				E[] datatmp = (E[]) new Object[data.length * 3 / 2 + 1];
+				for (int i = 0; i < idx; i++)
+					datatmp[i] = data[i];
+				datatmp[idx] = element;
+				for (int i = idx + 1; i < data.length; i++)
+					datatmp[i] = data[i];
+				data = datatmp;
+			} else {
+				for (int i = data.length - 1; i >= idx; i--)
+					data[i] = data[i - 1];
+				data[idx] = element;
+			}
+			size++;
 		}
-		size++;
 	}
 
 	@Override
 	public E get(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+		return isIdxCorrect(idx) == true ? data[idx] : data[idx];
 	}
 
 	@Override
 	public E set(int idx, E element) {
-		// TODO Auto-generated method stub
+		if (isIdxCorrect(idx) == true) {
+			E tmp = data[idx];
+			data[idx] = element;
+			return tmp;
+		}
 		return null;
 	}
 
 	@Override
 	public E remove(int idx) {
-		// TODO Auto-generated method stub
+		if (isIdxCorrect(idx) == true) {
+			E tmp = data[idx];
+			for (int i = idx + 1; i < data.length; i++) {
+				data[i] = data[i - 1];
+			}
+			size--;
+			return tmp;
+		}
 		return null;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+		int idx = 0;
+		for (int i = 0; i < size(); i++) {
+			if (o == data[i]) {
+				idx = i;
+				break;
+			} else {
+				idx = -1;
+			}
+		}
+		return idx;
+
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+		int idx = 0;
+		for (int i = size(); i > -1; i++) {
+			if (o == data[i]) {
+				idx = i;
+				break;
+			} else {
+				idx = -1;
+			}
+		}
+		return idx;
 	}
 
 	@Override
 	public List<E> subList(int fromIdx, int toIdx) {
-		// TODO Auto-generated method stub
-		return null;
+		if (fromIdx < toIdx && isIdxCorrect(fromIdx) && isIdxCorrect(toIdx)) {
+			List<E> tmp = new ArrayList<>();
+			for (int i = fromIdx; i <= toIdx; i++) {
+				tmp.add(data[i]);
+			}
+			return tmp;
+		}
+		throw new RuntimeException("wrong Idx");
 	}
 
 	@Override
@@ -94,13 +136,13 @@ public class ArrayList<E> extends AbstractList<E> {
 
 	@Override
 	public boolean addAll(List<? extends E> list) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 
 	@Override
 	public boolean addAll(int idx, List<? extends E> c) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 

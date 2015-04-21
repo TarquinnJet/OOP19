@@ -10,6 +10,9 @@ public class Main {
 		ari1.add(123);
 		System.out.println(ari1);System.out.println(ari1.size());
 		ari1.add(10, 77); System.out.println(ari1);System.out.println(ari1.size());
+		ari1.add(22, 2);System.out.println(ari1);
+		List ss = ari1.subList(1,2);
+		System.out.println(ss);
 	}
 
 }
