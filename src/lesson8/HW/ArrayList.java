@@ -17,16 +17,14 @@ public class ArrayList<E> extends AbstractList<E> {
 	}
 
 	private boolean isIdxCorrect(int idx) {
-		if (0 < idx && idx <= size()) {
+		if (0 <= idx && idx <= size()) {
 			return true;
 		} else {
-			throw new IllegalArgumentException("wrong idx!");
+			throw new IndexOutOfBoundsException("wrong idx!");
 		}
 	}
 
-	private void resizeData() {
-	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public void add(E element) {
 		if (size == data.length) {
@@ -40,16 +38,19 @@ public class ArrayList<E> extends AbstractList<E> {
 		size++;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void add(int idx, E element) {
 		if (isIdxCorrect(idx) == true) {
-			if (size == data.length) {
+			if (size() == data.length) {
 				E[] datatmp = (E[]) new Object[data.length * 3 / 2 + 1];
-				for (int i = 0; i < idx; i++)
+				for (int i = 0; i < idx; i++) {
 					datatmp[i] = data[i];
+				}
+				for (int i = size() - 1; i >= idx; i--) {
+					datatmp[i + 1] = data[i];
+				}
 				datatmp[idx] = element;
-				for (int i = idx + 1; i < data.length; i++)
-					datatmp[i] = data[i];
 				data = datatmp;
 			} else {
 				for (int i = data.length - 1; i >= idx; i--)
@@ -62,7 +63,7 @@ public class ArrayList<E> extends AbstractList<E> {
 
 	@Override
 	public E get(int idx) {
-		return isIdxCorrect(idx) == true ? data[idx] : data[idx];
+		return isIdxCorrect(idx) == true ? data[idx] : null;
 	}
 
 	@Override
@@ -80,7 +81,7 @@ public class ArrayList<E> extends AbstractList<E> {
 		if (isIdxCorrect(idx) == true) {
 			E tmp = data[idx];
 			for (int i = idx + 1; i < data.length; i++) {
-				data[i] = data[i - 1];
+				data[i - 1] = data[i];
 			}
 			size--;
 			return tmp;
@@ -126,24 +127,12 @@ public class ArrayList<E> extends AbstractList<E> {
 			}
 			return tmp;
 		}
-		throw new RuntimeException("wrong Idx");
+		throw new IndexOutOfBoundsException("wrong Idx");
 	}
 
 	@Override
 	public void clear() {
 		this.size = 0;
-	}
-
-	@Override
-	public boolean addAll(List<? extends E> list) {
-
-		return false;
-	}
-
-	@Override
-	public boolean addAll(int idx, List<? extends E> c) {
-
-		return false;
 	}
 
 	@Override
