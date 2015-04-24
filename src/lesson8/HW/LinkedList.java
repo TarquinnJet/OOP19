@@ -35,6 +35,12 @@ public class LinkedList<T> extends AbstractList<T> {
 	private Node<T> stepperBackward(int idx) {
 		Node<T> tmp = tail;
 		int i = 0;
+		if (idx == 0) {
+			return tmp;
+		}
+		if (idx == size()) {
+			return head;
+		}
 		while (i != idx) {
 			tmp = tmp.left;
 			i++;
@@ -109,16 +115,26 @@ public class LinkedList<T> extends AbstractList<T> {
 	public T remove(int idx) {
 		T tmp = null;
 		if (isIdxCorrect(idx)) {
+			Node<T> curr = stepperForward(idx);
 			tmp = stepperForward(idx).el;
+			if (idx == 0) {
+				head = curr.right;
+				head.left = null;
+				size--;
+				return tmp;
+			}
 			if (idx != size()) {
 				Node<T> prev = stepperForward(idx).left;
 				Node<T> next = stepperForward(idx).right;
 				next.left = stepperForward(idx).left;
 				prev.right = stepperForward(idx).right;
+				size--;
 				return tmp;
 			} else {
 				tail = stepperForward(idx).left;
-				stepperForward(idx).left.right = null;
+				tail.right = null;
+				size--;
+				return tmp;
 			}
 		}
 		return null;
@@ -147,7 +163,7 @@ public class LinkedList<T> extends AbstractList<T> {
 				i++;
 			}
 		}
-		return size() - i;
+		return size() - i - 1;
 	}
 
 	@Override
@@ -155,7 +171,7 @@ public class LinkedList<T> extends AbstractList<T> {
 		if (fromIdx < toIdx && isIdxCorrect(fromIdx) && isIdxCorrect(toIdx)) {
 			List<T> tmp = new LinkedList<>();
 			Node<T> tmpNode = stepperForward(fromIdx);
-			while (tmpNode != stepperForward(toIdx)) {
+			while (tmpNode != stepperForward(toIdx).right) {
 				tmp.add(tmpNode.el);
 				tmpNode = tmpNode.right;
 			}
@@ -197,5 +213,34 @@ public class LinkedList<T> extends AbstractList<T> {
 			tmp = tmp.left;
 		}
 		return sb.delete(sb.length() - 2, sb.length()).append("]").toString();
+	}
+
+	public boolean addAll(int idx, LinkedList<T> c) {
+		if (isIdxCorrect(idx)) {
+			if (idx == 0) {
+				c.tail.right = head;
+				head.left = c.tail;
+				head = c.tail;
+				size += c.size;
+			}
+			if (idx == size() - 1) {
+				addAll(c);
+			}
+			Node<T> curr = stepperForward(idx);
+			curr.left.right = c.head;
+			c.head.left = curr.left;
+			c.tail.right = curr;
+			curr.left = c.tail;
+			size += c.size;
+		}
+		return c.size() == 0 ? false : true;
+	}
+	
+	public boolean addAll(LinkedList<T> list) {
+		tail.right = list.head;
+		list.head.left=tail;
+		tail = list.tail;
+		size += list.size;
+		return list.size() == 0 ? false : true;
 	}
 }
