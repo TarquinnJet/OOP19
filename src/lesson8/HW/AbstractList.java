@@ -4,7 +4,7 @@ public abstract class AbstractList<E> implements List<E> {
 
 	@Override
 	public boolean contains(Object o) {
-		return indexOf(o) != -1 ? true : false;
+		return indexOf(o) != -1;
 	}
 
 	@Override

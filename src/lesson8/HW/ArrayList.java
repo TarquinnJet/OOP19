@@ -23,7 +23,7 @@ public class ArrayList<E> extends AbstractList<E> {
 			throw new IndexOutOfBoundsException("wrong idx!");
 		}
 	}
-
+//вставка по индексу в конец. 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void add(E element) {
