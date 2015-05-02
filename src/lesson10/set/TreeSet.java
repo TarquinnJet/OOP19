@@ -7,6 +7,7 @@ public class TreeSet<E extends Comparable<E>> implements Set<E> {
 	private static class Node<T> {
 		Node<T> left;
 		Node<T> right;
+		@SuppressWarnings("unused")
 		Node<T> parent;
 		T val;
 
@@ -15,6 +16,7 @@ public class TreeSet<E extends Comparable<E>> implements Set<E> {
 			this.parent = parent;
 		}
 
+		@SuppressWarnings("unused")
 		public Node(T val, Node<T> left, Node<T> right, Node<T> parent) {
 			this.val = val;
 			this.left = left;

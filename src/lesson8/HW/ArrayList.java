@@ -1,6 +1,8 @@
 package lesson8.HW;
 
-public class ArrayList<E> extends AbstractList<E> {
+import java.util.Comparator;
+
+public class ArrayList<E> extends AbstractList<E> implements Comparator<E>{
 
 	public static final int DEFAULT_CAPACITY = 20;
 
@@ -146,5 +148,11 @@ public class ArrayList<E> extends AbstractList<E> {
 			sb.append(data[i]).append(", ");
 		}
 		return sb.delete(sb.length() - 2, sb.length()).append("]").toString();
+	}
+
+	@Override
+	public int compare(E o1, E o2) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

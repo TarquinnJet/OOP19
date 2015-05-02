@@ -5,13 +5,18 @@ package lesson10;
 public class Task1 {
 
 	private class Node<V> {
+		@SuppressWarnings("unused")
 		public Node<V> left;
+		@SuppressWarnings("unused")
 		public Node<V> right;
+		@SuppressWarnings("unused")
 		public V el;
 
+		@SuppressWarnings("unused")
 		public Node() {
 		}
 
+		@SuppressWarnings("unused")
 		public Node(V el, Node<V> left, Node<V> right) {
 			this.el = el;
 			this.left = left;
