@@ -31,6 +31,7 @@ public class TreeSet<E extends Comparable<E>> implements Set<E> {
 			root = new Node<E>(el, null);
 			size++;
 			return true;
+
 		}
 
 		return add(el, root);
