@@ -162,6 +162,12 @@ public class TreeSet<E extends Comparable<E>> implements Set<E> {
 		return size;
 	}
 
+	@Override
+	public void clear() {
+		this.root = null;
+		size=0;
+		
+	}
 	public static void main(String[] args) {
 		TreeSet<Integer> tr = new TreeSet<>();
 		tr.add(10);
@@ -174,4 +180,6 @@ public class TreeSet<E extends Comparable<E>> implements Set<E> {
 		System.out.println(tr);
 		System.out.println(tr.contains(6));
 	}
+
+	
 }
