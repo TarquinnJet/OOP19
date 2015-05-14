@@ -1,13 +1,30 @@
 package lesson8.HW;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
-public class ArrayList<E> extends AbstractList<E> implements Comparator<E>{
+public class ArrayList<E> extends AbstractList<E> implements Comparator<E>,
+		Comparable<E> {
 
 	public static final int DEFAULT_CAPACITY = 20;
 
 	private E[] data;
 	private int size;
+	
+	@Override
+	public Iterator<E> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int compareTo(E o) {
+		return 0;
+	}
+
+	@Override
+	public int compare(E o1, E o2) {
+		return 0;
+	}
 
 	public ArrayList() {
 		this(DEFAULT_CAPACITY);
@@ -15,6 +32,7 @@ public class ArrayList<E> extends AbstractList<E> implements Comparator<E>{
 
 	@SuppressWarnings("unchecked")
 	public ArrayList(int capacity) {
+		if(capacity<0){throw new IllegalArgumentException("capacity<0");}
 		data = (E[]) new Object[capacity];
 	}
 
@@ -25,7 +43,7 @@ public class ArrayList<E> extends AbstractList<E> implements Comparator<E>{
 			throw new IndexOutOfBoundsException("wrong idx!");
 		}
 	}
-//вставка по индексу в конец. 
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void add(E element) {
@@ -34,7 +52,7 @@ public class ArrayList<E> extends AbstractList<E> implements Comparator<E>{
 			for (int i = 0; i < data.length; i++) {
 				datatmp[i] = data[i];
 			}
-			data = datatmp;
+			data = datatmp; //System.arraycopy(data, 0, datatmp, 0, data.length);
 		}
 		data[size] = element;
 		size++;
@@ -150,9 +168,5 @@ public class ArrayList<E> extends AbstractList<E> implements Comparator<E>{
 		return sb.delete(sb.length() - 2, sb.length()).append("]").toString();
 	}
 
-	@Override
-	public int compare(E o1, E o2) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 }

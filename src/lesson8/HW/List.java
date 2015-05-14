@@ -6,7 +6,7 @@ package lesson8.HW;
  * в абстрактном классе по усмотрению автора
  * */
 
-public interface List<E> {
+public interface List<E> extends Iterable<E>  {
 
 	/**
 	 * ƒобавл€ет элемент в конец списка

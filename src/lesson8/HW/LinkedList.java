@@ -1,5 +1,9 @@
 package lesson8.HW;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import lesson7.deque.Node;
 
 public class LinkedList<T> extends AbstractList<T> {
@@ -12,6 +16,83 @@ public class LinkedList<T> extends AbstractList<T> {
 		} else {
 			throw new IndexOutOfBoundsException("wrong idx!");
 		}
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new Iterator<T>() {
+
+			Node<T> current = head;
+			boolean canRemove;
+			int listSize = LinkedList.this.size;
+
+			@Override
+			public boolean hasNext() {
+				return current != null;
+			}
+
+			@Override
+			public T next() {
+				if (!hasNext())
+					throw new NoSuchElementException();
+				check();
+				canRemove = true;
+				T el = current.el;
+				current = current.right;
+				return el;
+			}
+
+			@Override
+			public void remove() {
+				if (!canRemove) {
+					throw new IllegalStateException();
+				}
+				check();
+				//
+
+				canRemove = false;
+			}
+
+			public void check() {
+				if (!(listSize == LinkedList.this.size))
+					throw new ConcurrentModificationException();
+			}
+		};
+	}
+
+	public static void main(String[] args) {
+		// LinkedList<Integer> in = new LinkedList<>();
+		// LinkedList<Integer> in2 = new LinkedList<>();
+		// in.add(1);
+		// in.add(2);
+		// in.add(3);
+		// in.add(4);
+		// in.add(5);
+		// in.add(6);
+		// for (Integer i : in) {
+		// if (i % 2 == 0){in2.add(i);}
+		// }
+		// System.out.println(in2);
+
+		LinkedList<Integer> list = new LinkedList<>();
+		LinkedList<Integer> list2 = new LinkedList<>();
+		list.add(1);
+		list.add(2);
+		list.add(3);
+		list2.add(1);
+		list2.add(2);
+		list2.add(3);
+		list2.add(4);
+		Iterator<Integer> iter1 = list.iterator();
+
+		while (iter1.hasNext()) {
+			Iterator<Integer> iter2 = list2.iterator();
+			Integer i = iter1.next();
+			while (iter2.hasNext()) {
+				System.out.println(i + " " + iter2.next());
+			}
+		}
+
 	}
 
 	private Node<T> stepperForward(int idx) {
@@ -117,22 +198,22 @@ public class LinkedList<T> extends AbstractList<T> {
 		if (isIdxCorrect(idx)) {
 			Node<T> curr = stepperForward(idx);
 			tmp = stepperForward(idx).el;
-			if (idx == 0) {
+			if (curr == head) {
 				head = curr.right;
 				head.left = null;
 				size--;
 				return tmp;
 			}
-			if (idx != size()) {
-				Node<T> prev = stepperForward(idx).left;
-				Node<T> next = stepperForward(idx).right;
-				next.left = stepperForward(idx).left;
-				prev.right = stepperForward(idx).right;
+			if (curr == tail) {
+				tail = curr.left;
+				tail.right = null;
 				size--;
 				return tmp;
 			} else {
-				tail = stepperForward(idx).left;
-				tail.right = null;
+				Node<T> prev = curr.left;
+				Node<T> next = curr.right;
+				next.left = curr.left;
+				prev.right = curr.right;
 				size--;
 				return tmp;
 			}
@@ -235,12 +316,13 @@ public class LinkedList<T> extends AbstractList<T> {
 		}
 		return c.size() == 0 ? false : true;
 	}
-	
+
 	public boolean addAll(LinkedList<T> list) {
 		tail.right = list.head;
-		list.head.left=tail;
+		list.head.left = tail;
 		tail = list.tail;
 		size += list.size;
 		return list.size() == 0 ? false : true;
 	}
+
 }

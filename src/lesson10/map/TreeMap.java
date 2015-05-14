@@ -10,8 +10,10 @@ public class TreeMap<K extends Comparable<K>, V > implements Map<K, V> {
 		@SuppressWarnings("unused")
 		Node<K, V> parent;
 		K key;
+		@SuppressWarnings("unused")
 		V val;
 
+		@SuppressWarnings("unused")
 		public Node(V val, Node<K, V> parent) {
 			this.val = val;
 			this.parent = parent;

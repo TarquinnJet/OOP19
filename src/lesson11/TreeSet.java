@@ -1,10 +1,22 @@
-package lesson10.set;
+package lesson11;
 
-public class TreeSet<E extends Comparable<E>> implements Set<E> {
+import java.util.Comparator;
+
+import lesson10.set.Set;
+
+public class TreeSet<E> implements Set<E> {
 	Node<E> root;
 	private int size;
+	private Comparator<? super E> comparator;
 
-	public static class Node<T> {
+	public TreeSet() {
+	}
+
+	public TreeSet(Comparator<? super E> comparator) {
+		this.comparator = comparator;
+	}
+
+	private static class Node<T> {
 		Node<T> left;
 		Node<T> right;
 		@SuppressWarnings("unused")
@@ -62,7 +74,8 @@ public class TreeSet<E extends Comparable<E>> implements Set<E> {
 	}
 
 	private int compare(E el1, E el2) {
-		return el1.compareTo(el2);
+		
+		return comparator!= null ? comparator.compare(el1,el2) : ((Comparable<E>) el1).compareTo(el2);
 	}
 
 	@Override
@@ -168,12 +181,17 @@ public class TreeSet<E extends Comparable<E>> implements Set<E> {
 		size = 0;
 
 	}
+
 	public static void main(String[] args) {
 		TreeSet<Integer> tr = new TreeSet<>();
-		for (int i=100;i>=0;i--){
+		for (int i = 100; i >= 0; i--) {
 			tr.add(i);
 		}
 		System.out.println(tr);
-		tr.remove(8);tr.remove(18);tr.remove(83);tr.remove(28);System.out.println(tr);
+		tr.remove(8);
+		tr.remove(18);
+		tr.remove(83);
+		tr.remove(28);
+		System.out.println(tr);
 	}
 }

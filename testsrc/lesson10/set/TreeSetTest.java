@@ -7,7 +7,6 @@ import org.junit.Test;
 public class TreeSetTest {
 	
 	TreeSet<Integer> treeSet = new TreeSet<>();
-		
 
 	@Test
 	public void shouldAddAndRemove(){
