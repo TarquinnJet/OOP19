@@ -32,13 +32,14 @@ public class Main {
 		for (int i = 0; i < 10; i++) {
 			li1.add(i);
 		}
-//		System.out.println("FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast()+" "+li1.size());
-//		li1.add(10, 111);System.out.println("FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast());
-//		System.out.print(li1.set(7, 77));System.out.println(" FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast()+" "+li1.size());
-//		System.out.print(li1.remove(0));System.out.println(" FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast()+" "+li1.size());
-//		System.out.print(li1.remove(10));System.out.println(" FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast()+" "+li1.size());
-//		li1.add(8,4);System.out.println(" FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast()+" "+li1.size());
-//		System.out.println(li1.indexOf(4));System.out.println(li1.lastIndexOf(4));
+		System.out.println("FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast()+" "+li1.size());
+		li1.add(10, 111);
+		System.out.println("FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast()+" "+li1.size());
+		System.out.print(li1.set(7, 77));System.out.println(" FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast()+" "+li1.size());
+		System.out.print(li1.remove(0));System.out.println(" FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast()+" "+li1.size());
+		System.out.print(li1.remove(10));System.out.println(" FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast()+" "+li1.size());
+		li1.add(8,4);System.out.println(" FW : "+li1.toString()+"  BW :  "+li1.toStringFormLast()+" "+li1.size());
+		System.out.println(li1.indexOf(4));System.out.println(li1.lastIndexOf(4));
 		List <Integer> li2 = li1.subList(4, 7);System.out.println(li2);
 		LinkedList<Integer> li = (LinkedList<Integer>) li1.subList(4, 7);System.out.println(li);
 		li1.addAll(li);System.out.println("FW : "+li1+"  BW :  "+li1.toStringFormLast()+" "+li1.size());

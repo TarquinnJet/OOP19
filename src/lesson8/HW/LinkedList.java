@@ -10,14 +10,6 @@ public class LinkedList<T> extends AbstractList<T> {
 	private Node<T> head, tail;
 	private int size;
 
-	private boolean isIdxCorrect(int idx) {
-		if (0 <= idx && idx <= size()) {
-			return true;
-		} else {
-			throw new IndexOutOfBoundsException("wrong idx!");
-		}
-	}
-
 	@Override
 	public Iterator<T> iterator() {
 		return new Iterator<T>() {
@@ -48,8 +40,7 @@ public class LinkedList<T> extends AbstractList<T> {
 					throw new IllegalStateException();
 				}
 				check();
-				//
-
+				LinkedList.this.remove(current);
 				canRemove = false;
 			}
 
@@ -60,73 +51,40 @@ public class LinkedList<T> extends AbstractList<T> {
 		};
 	}
 
-	public static void main(String[] args) {
-		// LinkedList<Integer> in = new LinkedList<>();
-		// LinkedList<Integer> in2 = new LinkedList<>();
-		// in.add(1);
-		// in.add(2);
-		// in.add(3);
-		// in.add(4);
-		// in.add(5);
-		// in.add(6);
-		// for (Integer i : in) {
-		// if (i % 2 == 0){in2.add(i);}
-		// }
-		// System.out.println(in2);
-
-		LinkedList<Integer> list = new LinkedList<>();
-		LinkedList<Integer> list2 = new LinkedList<>();
-		list.add(1);
-		list.add(2);
-		list.add(3);
-		list2.add(1);
-		list2.add(2);
-		list2.add(3);
-		list2.add(4);
-		Iterator<Integer> iter1 = list.iterator();
-
-		while (iter1.hasNext()) {
-			Iterator<Integer> iter2 = list2.iterator();
-			Integer i = iter1.next();
-			while (iter2.hasNext()) {
-				System.out.println(i + " " + iter2.next());
-			}
+	private void isIdxCorrect(int idx) {
+		if (!(0 <= idx && idx <= size())) {
+			throw new IndexOutOfBoundsException("wrong idx!");
 		}
-
 	}
 
-	private Node<T> stepperForward(int idx) {
-		Node<T> tmp = head;
-		int i = 0;
-		if (idx != 0) {
-			if (idx != size()) {
+	private Node<T> stepper(int idx) {
+		Node<T> tmp = null;
+
+		if (idx == 0) {
+			return head;
+		}
+		if (idx == size()) {
+			return tail;
+		} else {
+
+			if (idx < size() / 2) {
+				int i = 0;
+				tmp = head;
 				while (i < idx) {
 					tmp = tmp.right;
 					i++;
 				}
-				return tmp;
 			} else {
-				return tail;
+				int i = size();
+				tmp = tail;
+				while (i > idx) {
+					tmp = tmp.left;
+					i--;
+				}
 			}
-		} else {
-			return head;
-		}
-	}
-
-	private Node<T> stepperBackward(int idx) {
-		Node<T> tmp = tail;
-		int i = 0;
-		if (idx == 0) {
-			return tmp;
-		}
-		if (idx == size()) {
-			return head;
-		}
-		while (i != idx) {
-			tmp = tmp.left;
-			i++;
 		}
 		return tmp;
+
 	}
 
 	@Override
@@ -144,7 +102,6 @@ public class LinkedList<T> extends AbstractList<T> {
 			tail = nod;
 			size++;
 		}
-
 	}
 
 	private void addFirst(T element) {
@@ -158,74 +115,73 @@ public class LinkedList<T> extends AbstractList<T> {
 
 	@Override
 	public void add(int idx, T element) {
-		if (idx != 0) {
-			if (idx != size()) {
-				if (isIdxCorrect(idx)) {
-					Node<T> nod = new Node<>();
-					Node<T> tmp = stepperForward(idx).left;
-					nod.el = element;
-					nod.left = tmp;
-					nod.right = tmp.right;
-					tmp.right.left = nod;
-					tmp.right = nod;
-					size++;
-				}
-			} else
-				add(element);
-		} else
+		isIdxCorrect(idx);
+		if (idx == 0) {
 			addFirst(element);
+		}
+		if (idx == size()) {
+			add(element);
+		} else {
+
+			Node<T> nod = new Node<>();
+			Node<T> tmp = stepper(idx).left;
+			nod.el = element;
+			nod.left = tmp;
+			nod.right = tmp.right;
+			tmp.right.left = nod;
+			tmp.right = nod;
+			size++;
+		}
 	}
 
 	@Override
 	public T get(int idx) {
-		return isIdxCorrect(idx) ? stepperForward(idx).el : null;
+		isIdxCorrect(idx);
+		return stepper(idx).el;
 	}
 
 	@Override
 	public T set(int idx, T element) {
 		T tmp = null;
-		if (isIdxCorrect(idx)) {
-			tmp = stepperForward(idx).el;
-			stepperForward(idx).el = element;
-			return tmp;
-		}
-		return null;
+		isIdxCorrect(idx);
+		tmp = stepper(idx).el;
+		stepper(idx).el = element;
+		return tmp;
+
 	}
 
 	@Override
 	public T remove(int idx) {
-		T tmp = null;
-		if (isIdxCorrect(idx)) {
-			Node<T> curr = stepperForward(idx);
-			tmp = stepperForward(idx).el;
-			if (curr == head) {
-				head = curr.right;
-				head.left = null;
-				size--;
-				return tmp;
-			}
-			if (curr == tail) {
-				tail = curr.left;
-				tail.right = null;
-				size--;
-				return tmp;
-			} else {
-				Node<T> prev = curr.left;
-				Node<T> next = curr.right;
-				next.left = curr.left;
-				prev.right = curr.right;
-				size--;
-				return tmp;
-			}
+		isIdxCorrect(idx);
+		Node<T> curr = stepper(idx);
+		T tmp = curr.el;
+		remove(curr);
+		return tmp;
+	}
+
+	private void remove(Node<T> curr) {
+		if (curr == head) {
+			head = head.right;
+			head.left = null;
+			size--;
+		}else if (curr == tail) {
+			tail = tail.left;
+			tail.right = null;
+			size--;
+		} else {
+			Node<T> prev = curr.left;
+			Node<T> next = curr.right;
+			next.left = curr.left;
+			prev.right = curr.right;
+			size--;
 		}
-		return null;
 	}
 
 	@Override
 	public int indexOf(Object o) {
 		int i = 0;
-		while (stepperForward(i).right != null) {
-			if (stepperForward(i).el == o) {
+		while (stepper(i).right != null) {
+			if (stepper(i).el == o) {
 				break;
 			} else {
 				i++;
@@ -236,23 +192,26 @@ public class LinkedList<T> extends AbstractList<T> {
 
 	@Override
 	public int lastIndexOf(Object o) {
-		int i = 0;
-		while (stepperBackward(i).left != null) {
-			if (stepperBackward(i).el == o) {
+		int i = size();
+		
+		while (stepper(i).left != null) {
+			if (stepper(i).el.equals(o)) {
 				break;
 			} else {
-				i++;
+				i--;
 			}
 		}
-		return size() - i - 1;
+		return i - 1;
 	}
 
 	@Override
 	public List<T> subList(int fromIdx, int toIdx) {
-		if (fromIdx < toIdx && isIdxCorrect(fromIdx) && isIdxCorrect(toIdx)) {
+		isIdxCorrect(fromIdx);
+		isIdxCorrect(toIdx);
+		if (fromIdx < toIdx) {
 			List<T> tmp = new LinkedList<>();
-			Node<T> tmpNode = stepperForward(fromIdx);
-			while (tmpNode != stepperForward(toIdx).right) {
+			Node<T> tmpNode = stepper(fromIdx);
+			while (tmpNode != stepper(toIdx).right) {
 				tmp.add(tmpNode.el);
 				tmpNode = tmpNode.right;
 			}
@@ -295,34 +254,4 @@ public class LinkedList<T> extends AbstractList<T> {
 		}
 		return sb.delete(sb.length() - 2, sb.length()).append("]").toString();
 	}
-
-	public boolean addAll(int idx, LinkedList<T> c) {
-		if (isIdxCorrect(idx)) {
-			if (idx == 0) {
-				c.tail.right = head;
-				head.left = c.tail;
-				head = c.tail;
-				size += c.size;
-			}
-			if (idx == size() - 1) {
-				addAll(c);
-			}
-			Node<T> curr = stepperForward(idx);
-			curr.left.right = c.head;
-			c.head.left = curr.left;
-			c.tail.right = curr;
-			curr.left = c.tail;
-			size += c.size;
-		}
-		return c.size() == 0 ? false : true;
-	}
-
-	public boolean addAll(LinkedList<T> list) {
-		tail.right = list.head;
-		list.head.left = tail;
-		tail = list.tail;
-		size += list.size;
-		return list.size() == 0 ? false : true;
-	}
-
 }
